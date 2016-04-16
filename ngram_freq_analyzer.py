@@ -30,22 +30,22 @@ def generate_ngram_dict(ngram_size, input_file, output_file):
     first_chars = {}
     ngram_dict = {}
     if ngram_size == 1:
-        for x in xrange(0, 128):
+        for x in xrange(32, 128):
             first_chars[x] = 0
             ngram_dict[x] = 0
     if ngram_size == 2:
-        for x in xrange(0, 128):
+        for x in xrange(32, 128):
             first_chars[x] = 0
-        for x in xrange(0, 128):
-            for y in xrange(0, 128):
+        for x in xrange(32, 128):
+            for y in xrange(32, 128):
                 ngram_dict[(x, y)] = 0
     if ngram_size == 3:
-        for x in xrange(0, 128):
-            for y in xrange(0, 128):
+        for x in xrange(32, 128):
+            for y in xrange(32, 128):
                 first_chars[(x, y)] = 0
-        for x in xrange(0, 128):
-            for y in xrange(0, 128):
-                for z in xrange(0, 128):
+        for x in xrange(32, 128):
+            for y in xrange(32, 128):
+                for z in xrange(32, 128):
                     ngram_dict[(x, y, z)] = 0
 
     try:
@@ -53,6 +53,7 @@ def generate_ngram_dict(ngram_size, input_file, output_file):
         with open(input_file, 'rb') as input_data:
             print "Generating frequency map of leading characters and ngrams"
             for line in input_data:
+                line = line.strip()
                 line_count += 1
                 if len(line) > ngram_size - 1:
                     char_count += len(line) - ngram_size + 1
@@ -86,7 +87,6 @@ def generate_ngram_dict(ngram_size, input_file, output_file):
             for key in ngram_dict:
                 if ngram_dict[key] != 0:
                     ngram_dict[key] = -10 * math.log(1.00 * ngram_dict[key] / char_count)
-                    print key, ngram_dict[key]
                 else:
                     ngram_dict[key] = 1000
 
@@ -100,7 +100,7 @@ def generate_ngram_dict(ngram_size, input_file, output_file):
                         out_key += str(item) + ','
                 else:
                     out_key = key
-                str_out = str((int(value))) + "=" + str(out_key) + "\n"
+                str_out = "1:"+str((int(value))).zfill(4) + "=" + str(out_key) + "\n"
                 output_data.write(str_out)
             print "outputting ngram probabilities"
             for key, value in ngram_dict.items():
@@ -110,8 +110,17 @@ def generate_ngram_dict(ngram_size, input_file, output_file):
                         out_key += str(item) + ','
                 else:
                     out_key = key
-                str_out = str((int(value))) + "=" + str(out_key) + "\n"
+                str_out = "2:"+str((int(value))).zfill(4) + "=" + str(out_key) + "\n"
                 output_data.write(str_out)
+        with open(output_file, 'rb') as output_data:
+            print "sorting lines"
+            lines = output_data.readlines()
+            lines.sort()
+            print "lines sorted"
+        with open(output_file, 'wb') as output_data:
+            for line in lines:
+                output_data.write(line)
+
     except IOError:
         print 'Unable to open file. Does it exist? Do you have read permission?'
         os._exit(1)
