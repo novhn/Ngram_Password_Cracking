@@ -1,5 +1,8 @@
 """
-This program is just to create a list of MD5 hashed passwords
+This program is just to create a list of MD5 hashed passwords.
+
+It can be used to generate any list of hashes, either a list of hashes of the most common passwords, or
+a list of hashes to crack.
 
 """
 

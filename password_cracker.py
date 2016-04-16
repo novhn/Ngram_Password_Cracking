@@ -24,33 +24,37 @@ def process_inputs(argv):
     return ngram_size, pwd_dictionary, input_file, output_file
 
 
-def dictionary_crack(common_passwords, input_file, output_file):
-    print "Attempting to read password dictionary"
+def dictionary_crack(common_passwords_file, input_file, output_file):
+    print "Attempting to perform a dictionary attack"
     passwords_to_crack = []
     cracked_passwords = {}
+    common_passwords_dict = {}
 
     try:
+        print "Opening file of hashed common passwords"
+        with open(common_passwords_file, 'rb') as password_data:
+            print "Generating dictionary of common hashed passwords"
+            for password in password_data:
+                pwd = str(password).replace('\n','')
+                pwd_hash = hashlib.md5(pwd).hexdigest()
+                common_passwords_dict[pwd_hash] = pwd
+
         print "Opening file of passwords to crack"
         with open(input_file, 'rb') as input_data:
             print "Generating list of passwords to crack"
             for hashed_password in input_data:
-                passwords_to_crack.append(str(hashed_password).replace('\n',''))
+                hashed_pwd = str(hashed_password).replace('\n','')
+                if hashed_pwd in common_passwords_dict:
+                    cracked_passwords[hashed_pwd] = common_passwords_dict[hashed_pwd]
+                else:
+                    passwords_to_crack.append(hashed_pwd)
 
-        print passwords_to_crack
-
-        print "Opening output file"
-        with open(common_passwords, 'rb') as password_data:
-            print "checking common passwords against the password list"
-            for password in password_data:
-                pwd_hash = hashlib.md5(str(password).replace('\n','')).hexdigest()
-                if pwd_hash in passwords_to_crack:
-                    passwords_to_crack.remove(pwd_hash)
-                    cracked_passwords[pwd_hash] = password
+        print passwords_to_crack, cracked_passwords
 
         with open(output_file, 'wb') as output_data:
             print "writing cracked passwords to output file"
             for key, value in cracked_passwords.items():
-                str_out = str(key) + "," + str(value)
+                str_out = str(key) + "," + str(value) + "\n"
                 output_data.write(str_out)
 
     except IOError:
