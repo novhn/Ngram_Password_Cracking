@@ -24,7 +24,7 @@ def markov_crack(markov_file, password_file, password_length, output_file):
     with open(password_file, 'rb') as password_data:
         hashed_pwd = []
         for line in password_data:
-            hashed_pwd.append(line)
+            hashed_pwd.append(line.strip())
 
     with open(markov_file, 'rb') as markov_data:
         # initialize leading characters list
@@ -69,9 +69,11 @@ def markov_crack(markov_file, password_file, password_length, output_file):
                         new_pass = ''
                         for num in new_curr:
                             new_pass+=(chr(int(num)))
-                        new_hash = hashlib.md5(new_pass)
+                        new_hash = hashlib.md5(new_pass).hexdigest()
+
                         while new_hash in hashed_pwd:
                             print "password found:" + new_pass + "," + new_hash
+
                             with open(output_file,'ab') as output_data:
                                 output_data.write(new_pass+'::::'+new_hash+'\n')
                             hashed_pwd.remove(new_hash)
