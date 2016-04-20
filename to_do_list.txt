@@ -20,3 +20,10 @@ Wesley:
 1. Hold password length to 8
 
 2. Examine the time to crack 50 passwords versus 10 minutes
+
+Questions:
+----------
+1. Should we consider training the data along with the frequencies?
+2. Should we consider making the HMM additive, that is to say, incorporate multiple lists?
+3. How much time should be spent on the HMM?
+
