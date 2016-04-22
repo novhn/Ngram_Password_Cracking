@@ -22,6 +22,8 @@ def process_inputs(argv):
 def check_for_hash(password_chars, hashed_passwords, output_file):
     password = ''
     for num in password_chars:
+        if num == '':
+            print password_chars
         password+=(chr(int(num)))
     new_hash = hashlib.md5(password).hexdigest()
     sys.stdout.write('%s\r' % password)
@@ -45,7 +47,7 @@ def markov_crack(markov_file, password_file, password_length, output_file):
         for line in markov_data:
             if line[0] == "2":
                 break
-            leading_chars.append((line.split("=")[1].rstrip(",").rstrip()).split(","))
+            leading_chars.append((line.split("=")[1].rstrip().rstrip(",")).split(","))
         # init probable ngrams list
         ngrams = []
         for line in markov_data:
