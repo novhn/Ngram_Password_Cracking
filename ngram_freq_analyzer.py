@@ -5,13 +5,14 @@ import math
 
 def usage_error(msg):
     print msg
-    print 'usage: python ngram_freq_analyzer.py ngram_length input_file output_file all-flag'
+    print 'usage: python ngram_freq_analyzer.py ngram_length input_file output_file all_or_existing'
+    print 'the \'all_or_existing\' input should be either the word \'all\' or the word \'existing\''
     os._exit(1)
 
 
 def process_inputs(argv):
-    if len(argv) != 3:
-        usage_error('Three arguments are required.')
+    if len(argv) != 4:
+        usage_error('Four arguments are required.')
     try:
         ngram_size = int(argv[0])
     except:
@@ -21,8 +22,9 @@ def process_inputs(argv):
     input_file = argv[1]
     output_file = argv[2]
     all_flag = False
-    if argv[3]:
+    if argv[3] == "all":
         all_flag = True
+        print "true"
     return ngram_size, input_file, output_file, all_flag
 
 
@@ -107,8 +109,7 @@ def generate_ngram_dict(ngram_size, input_file, output_file, all_flag):
                 if ngram_dict[key] != 0:
                     ngram_dict[key] = -10 * math.log(1.00 * ngram_dict[key] / char_count)
                 else:
-                    if all_flag:
-                        ngram_dict[key] = 1000
+                    ngram_dict[key] = 1000
 
         print "Opening output file"
         with open(output_file, 'wb') as output_data:
@@ -121,7 +122,8 @@ def generate_ngram_dict(ngram_size, input_file, output_file, all_flag):
                 else:
                     out_key = key
                 str_out = "1:"+str((int(value))).zfill(4) + "=" + str(out_key) + "\n"
-                output_data.write(str_out)
+                if value != 1000 or all_flag == True:
+                    output_data.write(str_out)
             print "outputting ngram probabilities"
             for key, value in ngram_dict.items():
                 out_key = ''
@@ -131,7 +133,8 @@ def generate_ngram_dict(ngram_size, input_file, output_file, all_flag):
                 else:
                     out_key = key
                 str_out = "2:"+str((int(value))).zfill(4) + "=" + str(out_key) + "\n"
-                output_data.write(str_out)
+                if value != 1000 or all_flag == True:
+                    output_data.write(str_out)
         with open(output_file, 'rb') as output_data:
             print "sorting lines"
             lines = output_data.readlines()
