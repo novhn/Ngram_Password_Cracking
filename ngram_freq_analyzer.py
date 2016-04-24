@@ -5,7 +5,7 @@ import math
 
 def usage_error(msg):
     print msg
-    print 'usage: python ngram_freq_analyzer.py ngram_length input_file output_file'
+    print 'usage: python ngram_freq_analyzer.py ngram_length input_file output_file all-flag'
     os._exit(1)
 
 
@@ -20,10 +20,13 @@ def process_inputs(argv):
         usage_error("first param must be integer between 1-3")
     input_file = argv[1]
     output_file = argv[2]
-    return ngram_size, input_file, output_file
+    all_flag = False
+    if argv[3]:
+        all_flag = True
+    return ngram_size, input_file, output_file, all_flag
 
 
-def generate_ngram_dict(ngram_size, input_file, output_file):
+def generate_ngram_dict(ngram_size, input_file, output_file, all_flag):
     print "Initializing variables"
     line_count = 0
     char_count = 0
@@ -104,7 +107,8 @@ def generate_ngram_dict(ngram_size, input_file, output_file):
                 if ngram_dict[key] != 0:
                     ngram_dict[key] = -10 * math.log(1.00 * ngram_dict[key] / char_count)
                 else:
-                    ngram_dict[key] = 1000
+                    if all_flag:
+                        ngram_dict[key] = 1000
 
         print "Opening output file"
         with open(output_file, 'wb') as output_data:
@@ -143,8 +147,8 @@ def generate_ngram_dict(ngram_size, input_file, output_file):
 
 
 def main(argv):
-    ngram_size, input_file, output_file = process_inputs(argv)  # process command line args
-    generate_ngram_dict(ngram_size, input_file, output_file)  # generate ngram dictionary with counts
+    ngram_size, input_file, output_file, all_flag = process_inputs(argv)  # process command line args
+    generate_ngram_dict(ngram_size, input_file, output_file, all_flag)  # generate ngram dictionary with counts
 
 
 if __name__ == "__main__":
