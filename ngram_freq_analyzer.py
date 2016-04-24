@@ -5,13 +5,14 @@ import math
 
 def usage_error(msg):
     print msg
-    print 'usage: python ngram_freq_analyzer.py ngram_length input_file output_file'
+    print 'usage: python ngram_freq_analyzer.py ngram_length input_file output_file all_or_existing'
+    print 'the \'all_or_existing\' input should be either the word \'all\' or the word \'existing\''
     os._exit(1)
 
 
 def process_inputs(argv):
-    if len(argv) != 3:
-        usage_error('Three arguments are required.')
+    if len(argv) != 4:
+        usage_error('Four arguments are required.')
     try:
         ngram_size = int(argv[0])
     except:
@@ -20,10 +21,14 @@ def process_inputs(argv):
         usage_error("first param must be integer between 1-3")
     input_file = argv[1]
     output_file = argv[2]
-    return ngram_size, input_file, output_file
+    all_flag = False
+    if argv[3] == "all":
+        all_flag = True
+        print "true"
+    return ngram_size, input_file, output_file, all_flag
 
 
-def generate_ngram_dict(ngram_size, input_file, output_file):
+def generate_ngram_dict(ngram_size, input_file, output_file, all_flag):
     print "Initializing variables"
     line_count = 0
     char_count = 0
@@ -117,7 +122,8 @@ def generate_ngram_dict(ngram_size, input_file, output_file):
                 else:
                     out_key = key
                 str_out = "1:"+str((int(value))).zfill(4) + "=" + str(out_key) + "\n"
-                output_data.write(str_out)
+                if value != 1000 or all_flag == True:
+                    output_data.write(str_out)
             print "outputting ngram probabilities"
             for key, value in ngram_dict.items():
                 out_key = ''
@@ -127,7 +133,8 @@ def generate_ngram_dict(ngram_size, input_file, output_file):
                 else:
                     out_key = key
                 str_out = "2:"+str((int(value))).zfill(4) + "=" + str(out_key) + "\n"
-                output_data.write(str_out)
+                if value != 1000 or all_flag == True:
+                    output_data.write(str_out)
         with open(output_file, 'rb') as output_data:
             print "sorting lines"
             lines = output_data.readlines()
@@ -143,8 +150,8 @@ def generate_ngram_dict(ngram_size, input_file, output_file):
 
 
 def main(argv):
-    ngram_size, input_file, output_file = process_inputs(argv)  # process command line args
-    generate_ngram_dict(ngram_size, input_file, output_file)  # generate ngram dictionary with counts
+    ngram_size, input_file, output_file, all_flag = process_inputs(argv)  # process command line args
+    generate_ngram_dict(ngram_size, input_file, output_file, all_flag)  # generate ngram dictionary with counts
 
 
 if __name__ == "__main__":
