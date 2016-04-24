@@ -89,6 +89,8 @@ def markov_crack(markov_file, password_file, password_length, output_file):
                             if len(hashed_pwd) == 0:
                                 end = time.time()
                                 print end-start
+	                        with open(output_file,'ab') as output_data:
+	                            output_data.write('Time: '+str(end-start)+' seconds\n')
                                 return 0
                             break
 
