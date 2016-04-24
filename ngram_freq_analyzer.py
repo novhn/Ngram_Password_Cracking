@@ -62,8 +62,9 @@ def generate_ngram_dict(ngram_size, input_file, output_file):
                     multiplier = int(parts[0])
                     line = parts[1]
 
+                line_count += 1 * multiplier
                 if len(line) > ngram_size - 1:
-                    char_count += len(line) - ngram_size + 1
+                    char_count += (len(line) - ngram_size + 1) * multiplier
 
                 for char in line:
                     if ord(char) > 128 or ord(char) < 32:
@@ -92,7 +93,6 @@ def generate_ngram_dict(ngram_size, input_file, output_file):
                         key = unigram
                     ngram_dict[key] += 1 * multiplier
 
-                line_count += 1 * multiplier
 
             for key in first_chars:
                 if first_chars[key] != 0:
