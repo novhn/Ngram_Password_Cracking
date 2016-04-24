@@ -54,9 +54,23 @@ def generate_ngram_dict(ngram_size, input_file, output_file):
             print "Generating frequency map of leading characters and ngrams"
             for line in input_data:
                 line = line.strip()
-                line_count += 1
+                multiplier = 1
+                is_invalid = 0
+
+                parts = line.split()
+                if len(parts) > 1:
+                    multiplier = int(parts[0])
+                    line = parts[1]
+
                 if len(line) > ngram_size - 1:
                     char_count += len(line) - ngram_size + 1
+
+                for char in line:
+                    if ord(char) > 128 or ord(char) < 32:
+                        is_invalid = 1
+
+                if is_invalid:
+                    continue
 
                 if ngram_size == 3:
                     key = (ord(line[0]), ord(line[1]))
@@ -76,7 +90,9 @@ def generate_ngram_dict(ngram_size, input_file, output_file):
                         key = (unigram, bigram)
                     if ngram_size == 1:
                         key = unigram
-                    ngram_dict[key] += 1
+                    ngram_dict[key] += 1 * multiplier
+
+                line_count += 1 * multiplier
 
             for key in first_chars:
                 if first_chars[key] != 0:
