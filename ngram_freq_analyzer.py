@@ -91,6 +91,8 @@ def generate_ngram_dict(ngram_size, input_file, output_file, all_flag):
                 if ngram_size == 4:
                     key = (ord(line[0]),ord(line[1]),ord(line[2]))
                 elif ngram_size == 3:
+                    if len(line) < 2:
+                        continue
                     key = (ord(line[0]), ord(line[1]))
                 else:
                     key = ord(line[0])
