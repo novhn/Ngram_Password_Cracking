@@ -60,7 +60,7 @@ def generate_ngram_dict(ngram_size, input_file, output_file, all_flag):
         for x in xrange(32, 128):
             for y in xrange(32, 128):
                 for z in xrange(32, 128):
-                    for a in xrange(32, 128)
+                    for a in xrange(32, 128):
                         ngram_dict[(x, y, z, a)] = 0
 
     try:
