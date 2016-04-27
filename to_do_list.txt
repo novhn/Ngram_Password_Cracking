@@ -2,22 +2,33 @@ Variables:
 ---------
 
 1. Ngrams with probability 0
-2. password length (limit to 8 for now)
-3. time to crack (limit to TTC for 50 passwords)
-4. frequency of bad passwords as a part of training data
+  -We should use only the ngrams that exist. 
+2. Ngram length
+  -Bigram versus Trigram. No Unigram.
+3. Number of passwords cracked
+  -Currently a constant of 100
+4. Training data itself
+  -Which data do we use?
+  -Do we include the frequencies?
 
+Outputs
+---------
+1. Time to crack (TTC for number of passwords)
+
+Not a variable:
+-----------
+1. Password length (limit to 8 for now)
+  -We are finding all of the short passwords first
 
 John:
 -----
-1. Hold Length to 8 and TTC to 50 passwords
-DONE - 2. Examine the github password list (https://github.com/danielmiessler/SecLists/tree/master/Passwords)
+1. Examine the github password list (https://github.com/danielmiessler/SecLists/tree/master/Passwords)
 and look for the frequency of bad passwords in order to better weight the ngram models
-3. Tinker with ngram probabilities that are 0, and whether to keep them
+2. Categorize training data
+
 
 Wesley:
 ------
-1. Hold password length to 8
-2. Examine the time to crack 50 passwords versus 10 minutes
 
 Questions:
 ----------
