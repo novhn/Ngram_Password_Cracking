@@ -40,6 +40,9 @@ def check_for_hash(password_chars, hashed_passwords, output_file, counter):
 
 
 def markov_crack(markov_file, password_file, password_length, output_file):
+    #empty out the output file if it exists
+    open(output_file, 'w').close()
+
     with open(password_file, 'rb') as password_data:
         hashed_pwd = []
         for line in password_data:
@@ -96,16 +99,22 @@ def markov_crack(markov_file, password_file, password_length, output_file):
                                 end = time.time()
                                 print end - start
                                 with open(output_file, 'ab') as output_data:
+                                    output_data.write("Markov model: " + markov_file + '\n')
+                                    output_data.write("Password file: " + password_file+ '\n')
+                                    output_data.write("Password len: " + password_length+ '\n')
+                                    output_data.write("All passwords cracked."+ '\n')
                                     output_data.write('Time: ' + str(end - start) + ' seconds\n')
                                 return 0
                             if cracked_pwd_count == 100:
-                                print "1000 pwd cracked"
                                 end = time.time()
                                 print end-start
                                 with open(output_file, 'ab') as output_data:
+                                    output_data.write("Markov model: " + markov_file+ '\n')
+                                    output_data.write("Password file: " + password_file+ '\n')
+                                    output_data.write("Password len: " + password_length+ '\n')
+                                    output_data.write(str(cracked_pwd_count) + " passwords cracked"+ '\n')
                                     output_data.write('Time: ' + str(end - start) + ' seconds\n')
                                 return 0
-
                             break
 
 
