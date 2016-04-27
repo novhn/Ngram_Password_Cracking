@@ -18,7 +18,8 @@ def process_inputs(argv):
     password_file = argv[1]
     password_length = argv[2]
     output_file = argv[3]
-    return markov_file, password_file, password_length, output_file
+    target_count = argv[4]
+    return markov_file, password_file, password_length, output_file, target_count
 
 
 def check_for_hash(password_chars, hashed_passwords, output_file, counter):
@@ -41,7 +42,7 @@ def check_for_hash(password_chars, hashed_passwords, output_file, counter):
     return counter
 
 
-def markov_crack(markov_file, password_file, password_length, output_file):
+def markov_crack(markov_file, password_file, password_length, output_file, target_count):
     print "Running with markov_file=" + markov_file + ", password_file ="+password_file
 
     #empty out the output file if it exists
@@ -109,7 +110,7 @@ def markov_crack(markov_file, password_file, password_length, output_file):
                                         output_data.write("All passwords cracked."+ '\n')
                                         output_data.write('Time: ' + str(end - start) + ' seconds\n')
                                     return 0
-                                if cracked_pwd_count == 100:
+                                if cracked_pwd_count == target_count:
                                     end = time.time()
                                     print end-start
                                     with open(output_file, 'ab') as output_data:
@@ -123,8 +124,8 @@ def markov_crack(markov_file, password_file, password_length, output_file):
 
 
 def main(argv):
-    markov_file, password_file, password_length, output_file = process_inputs(argv)
-    markov_crack(markov_file, password_file, password_length, output_file)
+    markov_file, password_file, password_length, output_file, target_count = process_inputs(argv)
+    markov_crack(markov_file, password_file, password_length, output_file, target_count)
 
 
 if __name__ == "__main__":
