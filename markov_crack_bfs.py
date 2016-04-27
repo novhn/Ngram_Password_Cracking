@@ -36,6 +36,8 @@ def check_for_hash(password_chars, hashed_passwords, output_file, counter):
             output_data.write(password + '::::' + new_hash + '\n')
         hashed_passwords.remove(new_hash)
         counter += 1
+        sys.stdout.write(' %s\r' % str(counter))
+        sys.stdout.flush()
     return counter
 
 
@@ -97,8 +99,6 @@ def markov_crack(markov_file, password_file, password_length, output_file):
                             # try cracking password, if it works, terminate loop
                             if len(new_curr) > 2:
                                 cracked_pwd_count = check_for_hash(new_curr, hashed_pwd, output_file, cracked_pwd_count)
-                                sys.stdout.write(' %s\r' % str(cracked_pwd_count))
-                                sys.stdout.flush()
                                 if len(hashed_pwd) == 0:
                                     end = time.time()
                                     print end - start
