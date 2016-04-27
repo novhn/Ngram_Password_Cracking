@@ -52,6 +52,16 @@ def generate_ngram_dict(ngram_size, input_file, output_file, all_flag):
             for y in xrange(32, 128):
                 for z in xrange(32, 128):
                     ngram_dict[(x, y, z)] = 0
+    if ngram_size == 4:
+        for x in xrange(32, 128):
+            for y in xrange(32, 128):
+                for z in xrange(32, 128):
+                    first_chars[(x, y, z)] = 0
+        for x in xrange(32, 128):
+            for y in xrange(32, 128):
+                for z in xrange(32, 128):
+                    for a in xrange(32, 128)
+                        ngram_dict[(x, y, z, a)] = 0
 
     try:
         print "Opening input file"
@@ -78,7 +88,9 @@ def generate_ngram_dict(ngram_size, input_file, output_file, all_flag):
                 if is_invalid:
                     continue
 
-                if ngram_size == 3:
+                if ngram_size == 4:
+                    key = (ord(line[0]),ord(line[1]),ord(line[2]))
+                elif ngram_size == 3:
                     key = (ord(line[0]), ord(line[1]))
                 else:
                     key = ord(line[0])
@@ -87,14 +99,18 @@ def generate_ngram_dict(ngram_size, input_file, output_file, all_flag):
                 i = len(line) - ngram_size
                 for x in xrange(0, i+1):
                     unigram = ord(line[x])
-                    if ngram_size == 3:
+                    if ngram_size == 4:
+                        bigram = ord(line[x + 1])
+                        trigram = ord(line[x + 2])
+                        quadgram = ord(line[x + 3])
+                    elif ngram_size == 3:
                         bigram = ord(line[x + 1])
                         trigram = ord(line[x + 2])
                         key = (unigram, bigram, trigram)
-                    if ngram_size == 2:
+                    elif ngram_size == 2:
                         bigram = ord(line[x + 1])
                         key = (unigram, bigram)
-                    if ngram_size == 1:
+                    elif ngram_size == 1:
                         key = unigram
                     ngram_dict[key] += 1 * multiplier
 
