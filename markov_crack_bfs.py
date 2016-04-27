@@ -28,10 +28,10 @@ def check_for_hash(password_chars, hashed_passwords, output_file, counter):
             print password_chars
         password += (chr(int(num)))
     new_hash = hashlib.md5(password).hexdigest()
-    sys.stdout.write('%s\r' % password)
-    sys.stdout.flush()
+    #sys.stdout.write('%s\r' % password)
+    #sys.stdout.flush()
     while new_hash in hashed_passwords:
-        print "password found:" + password + "," + new_hash
+        #print "password found:" + password + "," + new_hash
         with open(output_file, 'ab') as output_data:
             output_data.write(password + '::::' + new_hash + '\n')
         hashed_passwords.remove(new_hash)
@@ -40,6 +40,8 @@ def check_for_hash(password_chars, hashed_passwords, output_file, counter):
 
 
 def markov_crack(markov_file, password_file, password_length, output_file):
+    print "Running with markov_file=" + markov_file + ", password_file ="+password_file
+
     #empty out the output file if it exists
     open(output_file, 'w').close()
 
@@ -67,7 +69,6 @@ def markov_crack(markov_file, password_file, password_length, output_file):
         cracked_pwd_count = 0
 
         # markov loop
-        print "entering markov loop"
         start = time.time()
 
         # step 1: we loop through a number of times equal to the length - r
@@ -82,8 +83,8 @@ def markov_crack(markov_file, password_file, password_length, output_file):
                     curr_index = curr[1]
                     if curr_index == len(ngrams):
                         continue  # if we've reached end of prob_ngrams list, continue
-                    if len(curr_pass) >= i:
-                        continue  # if curr password is max length, continue
+                    if len(curr_pass) > i:
+                        continue  # if curr password is greater than max length, continue
                     for x in xrange(curr_index, len(ngrams)):
                         # look for matching ngram
                         if curr_pass[-ngram_len:] == ngrams[x][:ngram_len]:
@@ -94,27 +95,30 @@ def markov_crack(markov_file, password_file, password_length, output_file):
                             # add new password to stack
                             stack.append((new_curr, 0))
                             # try cracking password, if it works, terminate loop
-                            cracked_pwd_count = check_for_hash(new_curr, hashed_pwd, output_file, cracked_pwd_count)
-                            if len(hashed_pwd) == 0:
-                                end = time.time()
-                                print end - start
-                                with open(output_file, 'ab') as output_data:
-                                    output_data.write("Markov model: " + markov_file + '\n')
-                                    output_data.write("Password file: " + password_file+ '\n')
-                                    output_data.write("Password len: " + password_length+ '\n')
-                                    output_data.write("All passwords cracked."+ '\n')
-                                    output_data.write('Time: ' + str(end - start) + ' seconds\n')
-                                return 0
-                            if cracked_pwd_count == 100:
-                                end = time.time()
-                                print end-start
-                                with open(output_file, 'ab') as output_data:
-                                    output_data.write("Markov model: " + markov_file+ '\n')
-                                    output_data.write("Password file: " + password_file+ '\n')
-                                    output_data.write("Password len: " + password_length+ '\n')
-                                    output_data.write(str(cracked_pwd_count) + " passwords cracked"+ '\n')
-                                    output_data.write('Time: ' + str(end - start) + ' seconds\n')
-                                return 0
+                            if len(new_curr) > 2:
+                                cracked_pwd_count = check_for_hash(new_curr, hashed_pwd, output_file, cracked_pwd_count)
+                                sys.stdout.write(' %s\r' % str(cracked_pwd_count))
+                                sys.stdout.flush()
+                                if len(hashed_pwd) == 0:
+                                    end = time.time()
+                                    print end - start
+                                    with open(output_file, 'ab') as output_data:
+                                        output_data.write("Markov model: " + markov_file + '\n')
+                                        output_data.write("Password file: " + password_file+ '\n')
+                                        output_data.write("Password len: " + password_length+ '\n')
+                                        output_data.write("All passwords cracked."+ '\n')
+                                        output_data.write('Time: ' + str(end - start) + ' seconds\n')
+                                    return 0
+                                if cracked_pwd_count == 100:
+                                    end = time.time()
+                                    print end-start
+                                    with open(output_file, 'ab') as output_data:
+                                        output_data.write("Markov model: " + markov_file+ '\n')
+                                        output_data.write("Password file: " + password_file+ '\n')
+                                        output_data.write("Password len: " + password_length+ '\n')
+                                        output_data.write(str(cracked_pwd_count) + " passwords cracked"+ '\n')
+                                        output_data.write('Time: ' + str(end - start) + ' seconds\n')
+                                    return 0
                             break
 
 
