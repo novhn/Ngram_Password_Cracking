@@ -12,8 +12,8 @@ def usage_error(msg):
 
 
 def process_inputs(argv):
-    if len(argv) != 4:
-        usage_error('Four arguments are required.')
+    if len(argv) != 5:
+        usage_error('Five arguments are required.')
     markov_file = argv[0]
     password_file = argv[1]
     password_length = argv[2]
@@ -44,7 +44,6 @@ def check_for_hash(password_chars, hashed_passwords, output_file, counter):
 
 def markov_crack(markov_file, password_file, password_length, output_file, target_count):
     print "Running with markov_file=" + markov_file + ", password_file ="+password_file
-
     #empty out the output file if it exists
     open(output_file, 'w').close()
 
@@ -110,7 +109,7 @@ def markov_crack(markov_file, password_file, password_length, output_file, targe
                                         output_data.write("All passwords cracked."+ '\n')
                                         output_data.write('Time: ' + str(end - start) + ' seconds\n')
                                     return 0
-                                if cracked_pwd_count == target_count:
+                                if cracked_pwd_count >= int(target_count):
                                     end = time.time()
                                     print end-start
                                     with open(output_file, 'ab') as output_data:
