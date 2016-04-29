@@ -1,0 +1,80 @@
+wesley@atlas:~/Desktop/Ngram_Password_Cracking$ ./crack_all.sh 
+target 50, exists
+Running with markov_file=./markov_models/hmm_top10000_bi_exist.txt, password_file =./password_lists/singles.org_md5.txt
+4.62364506721
+Running with markov_file=./markov_models/hmm_top10000_tri_exist.txt, password_file =./password_lists/singles.org_md5.txt
+2.53004813194
+Running with markov_file=./markov_models/hmm_top100000_bi_exist.txt, password_file =./password_lists/singles.org_md5.txt
+16.1266670227
+Running with markov_file=./markov_models/hmm_top100000_tri_exist.txt, password_file =./password_lists/singles.org_md5.txt
+4.98186898232
+Running with markov_file=./markov_models/hmm_top1000000_bi_exist.txt, password_file =./password_lists/singles.org_md5.txt
+33.897040844
+Running with markov_file=./markov_models/hmm_top1000000_tri_exist.txt, password_file =./password_lists/singles.org_md5.txt
+34.5057790279
+target 100, exists
+Running with markov_file=./markov_models/hmm_top10000_bi_exist.txt, password_file =./password_lists/singles.org_md5.txt
+15.6023831367
+Running with markov_file=./markov_models/hmm_top10000_tri_exist.txt, password_file =./password_lists/singles.org_md5.txt
+3.90048789978
+Running with markov_file=./markov_models/hmm_top100000_bi_exist.txt, password_file =./password_lists/singles.org_md5.txt
+51.4155399799
+Running with markov_file=./markov_models/hmm_top100000_tri_exist.txt, password_file =./password_lists/singles.org_md5.txt
+20.4589920044
+Running with markov_file=./markov_models/hmm_top1000000_bi_exist.txt, password_file =./password_lists/singles.org_md5.txt
+217.941363096
+Running with markov_file=./markov_models/hmm_top1000000_tri_exist.txt, password_file =./password_lists/singles.org_md5.txt
+356.92881608
+target 50, all
+Running with markov_file=./markov_models/hmm_top10000_bi_all.txt, password_file =./password_lists/singles.org_md5.txt
+51.103178978
+Running with markov_file=./markov_models/hmm_top10000_tri_all.txt, password_file =./password_lists/singles.org_md5.txt
+83.3042471409
+Running with markov_file=./markov_models/hmm_top100000_bi_all.txt, password_file =./password_lists/singles.org_md5.txt
+56.6899838448
+Running with markov_file=./markov_models/hmm_top100000_tri_all.txt, password_file =./password_lists/singles.org_md5.txt
+96.7148718834
+Running with markov_file=./markov_models/hmm_top1000000_bi_all.txt, password_file =./password_lists/singles.org_md5.txt
+61.6646118164
+Running with markov_file=./markov_models/hmm_top1000000_tri_all.txt, password_file =./password_lists/singles.org_md5.txt
+128.493767977
+target 100, all
+Running with markov_file=./markov_models/hmm_top10000_bi_all.txt, password_file =./password_lists/singles.org_md5.txt
+535.716576099
+Running with markov_file=./markov_models/hmm_top10000_tri_all.txt, password_file =./password_lists/singles.org_md5.txt
+3043.19640517
+Running with markov_file=./markov_models/hmm_top100000_bi_all.txt, password_file =./password_lists/singles.org_md5.txt
+283.169348001
+Running with markov_file=./markov_models/hmm_top100000_tri_all.txt, password_file =./password_lists/singles.org_md5.txt
+2999.98643804
+Running with markov_file=./markov_models/hmm_top1000000_bi_all.txt, password_file =./password_lists/singles.org_md5.txt
+538.874625921
+Running with markov_file=./markov_models/hmm_top1000000_tri_all.txt, password_file =./password_lists/singles.org_md5.txt
+3059.87963295
+target 500, exists
+Running with markov_file=./markov_models/hmm_top10000_bi_exist.txt, password_file =./password_lists/singles.org_md5.txt
+193.237068892
+Running with markov_file=./markov_models/hmm_top10000_tri_exist.txt, password_file =./password_lists/singles.org_md5.txt
+41.8668951988
+Running with markov_file=./markov_models/hmm_top100000_bi_exist.txt, password_file =./password_lists/singles.org_md5.txt
+1088.59326887
+Running with markov_file=./markov_models/hmm_top100000_tri_exist.txt, password_file =./password_lists/singles.org_md5.txt
+111.448237896
+Running with markov_file=./markov_models/hmm_top1000000_bi_exist.txt, password_file =./password_lists/singles.org_md5.txt
+3084.29637408
+Running with markov_file=./markov_models/hmm_top1000000_tri_exist.txt, password_file =./password_lists/singles.org_md5.txt
+1628.33694291
+target 500, all
+Running with markov_file=./markov_models/hmm_top10000_bi_all.txt, password_file =./password_lists/singles.org_md5.txt
+8023.02675581
+Running with markov_file=./markov_models/hmm_top10000_tri_all.txt, password_file =./password_lists/singles.org_md5.txt
+12134.183305
+Running with markov_file=./markov_models/hmm_top100000_bi_all.txt, password_file =./password_lists/singles.org_md5.txt
+7197.23247004
+Running with markov_file=./markov_models/hmm_top100000_tri_all.txt, password_file =./password_lists/singles.org_md5.txt
+10341.5700161
+Running with markov_file=./markov_models/hmm_top1000000_bi_all.txt, password_file =./password_lists/singles.org_md5.txt
+7818.87909198
+Running with markov_file=./markov_models/hmm_top1000000_tri_all.txt, password_file =./password_lists/singles.org_md5.txt
+10555.20052
+
