@@ -7,19 +7,20 @@ import copy
 
 def usage_error(msg):
     print msg
-    print 'usage: python markov_crack.py markov_model_file password_input_file pwd_length output_file'
+    print 'usage: python markov_crack.py markov_model_file password_input_file pwd_length cracked_output_file uncracked_output target_count'
     os._exit(1)
 
 
 def process_inputs(argv):
-    if len(argv) != 5:
-        usage_error('Five arguments are required.')
+    if len(argv) != 6:
+        usage_error('Six arguments are required.')
     markov_file = argv[0]
     password_file = argv[1]
     password_length = argv[2]
     output_file = argv[3]
-    target_count = argv[4]
-    return markov_file, password_file, password_length, output_file, target_count
+    remaining_hashes = argv[4]
+    target_count = argv[5]
+    return markov_file, password_file, password_length, output_file, remaining_hashes, target_count
 
 
 def check_for_hash(password_chars, hashed_passwords, output_file, counter):
@@ -42,7 +43,7 @@ def check_for_hash(password_chars, hashed_passwords, output_file, counter):
     return counter
 
 
-def markov_crack(markov_file, password_file, password_length, output_file, target_count):
+def markov_crack(markov_file, password_file, password_length, output_file, remaining_hashes, target_count):
     print "Running with markov_file=" + markov_file + ", password_file ="+password_file
     #empty out the output file if it exists
     open(output_file, 'w').close()
@@ -118,13 +119,16 @@ def markov_crack(markov_file, password_file, password_length, output_file, targe
                                         output_data.write("Password len: " + password_length+ '\n')
                                         output_data.write(str(cracked_pwd_count) + " passwords cracked"+ '\n')
                                         output_data.write('Time: ' + str(end - start) + ' seconds\n')
+                                    with open(remaining_hashes, 'wb') as hash_data:
+                                        for elem in hashed_pwd:
+                                            hash_data.write(str(elem) + '\n')
                                     return 0
                             break
 
 
 def main(argv):
-    markov_file, password_file, password_length, output_file, target_count = process_inputs(argv)
-    markov_crack(markov_file, password_file, password_length, output_file, target_count)
+    markov_file, password_file, password_length, output_file, remaining_hashes, target_count = process_inputs(argv)
+    markov_crack(markov_file, password_file, password_length, output_file, remaining_hashes, target_count)
 
 
 if __name__ == "__main__":

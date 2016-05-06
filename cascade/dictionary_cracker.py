@@ -5,24 +5,18 @@ import hashlib
 
 def usage_error(msg):
     print msg
-    print 'usage: python password_cracker.py ngram_length password_dictionary input_file output_file_cracked output_file_uncracked'
+    print 'usage: python dictionary_cracker.py password_dictionary input_file output_file_cracked output_file_uncracked'
     os._exit(1)
 
 
 def process_inputs(argv):
-    if len(argv) != 5:
-        usage_error('Five arguments are required.')
-    try:
-        ngram_size = int(argv[0])
-    except:
-        usage_error("first param must be integer between 1-3")
-    if ngram_size > 3 or ngram_size < 1:
-        usage_error("first param must be integer between 1-3")
-    pwd_dictionary = argv[1]
-    input_file = argv[2]
-    output_file = argv[3]
-    uncracked_hashes = argv[4]
-    return ngram_size, pwd_dictionary, input_file, output_file, uncracked_hashes
+    if len(argv) != 4:
+        usage_error('Four arguments are required.')
+    pwd_dictionary = argv[0]
+    input_file = argv[1]
+    output_file = argv[2]
+    uncracked_hashes = argv[3]
+    return pwd_dictionary, input_file, output_file, uncracked_hashes
 
 
 def dictionary_crack(common_passwords_file, input_file, output_file, uncracked_hashes):
@@ -75,7 +69,7 @@ def dictionary_crack(common_passwords_file, input_file, output_file, uncracked_h
 
 
 def main(argv):
-    ngram_size, common_passwords, input_file, output_file, uncracked_hashes = process_inputs(argv)  # process command line args
+    common_passwords, input_file, output_file, uncracked_hashes = process_inputs(argv)  # process command line args
     dictionary_crack(common_passwords, input_file, output_file, uncracked_hashes)  # perform a dictionary attack
 
 
