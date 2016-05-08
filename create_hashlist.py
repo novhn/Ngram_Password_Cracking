@@ -36,7 +36,7 @@ def hash_inputs(input_file, output_file):
             for password in input_data:
                 passwords_to_hash.append(str(password).replace('\n', ''))
 
-        print passwords_to_hash
+        #print passwords_to_hash
 
         print "Opening output file"
         with open(output_file, 'wb') as output_data:
