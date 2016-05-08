@@ -34,7 +34,7 @@ def hash_inputs(input_file, output_file):
         with open(input_file, 'rb') as input_data:
             print "Generating list of passwords to crack"
             for password in input_data:
-                passwords_to_hash.append(str(password).replace('\n', ''))
+                passwords_to_hash.append(str(password.rstrip()))
 
         #print passwords_to_hash
 
