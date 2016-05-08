@@ -1,0 +1,20 @@
+dyn-160-39-8-209:cascade johnedwards$ ./cascade.sh ashmad_hashes.txt 
+dictionary crack
+Attempting to perform a dictionary attack
+Opening file of common passwords
+Generating dictionary of common hashed passwords
+Opening file of passwords to crack
+Generating list of passwords to crack
+376120 7358
+cracked 7358 out of 376120 passwords.
+writing cracked passwords to output file
+writing cracked passwords to output file
+target 50, exists
+Running with markov_file=../markov_models/hmm_top10000_bi_exist.txt, password_file =uncracked_by_dictionary.txt
+5.12057495117
+target 100, exists
+Running with markov_file=../markov_models/hmm_top10000_bi_exist.txt, password_file =uncracked_by_50_exists.txt
+22.1666300297
+target 500, exists
+Running with markov_file=../markov_models/hmm_top10000_bi_exist.txt, password_file =uncracked_by_100_exists.txt
+127.582242012
