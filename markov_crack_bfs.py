@@ -7,7 +7,7 @@ import copy
 
 def usage_error(msg):
     print msg
-    print 'usage: python markov_crack.py markov_model_file password_input_file pwd_length output_file'
+    print 'usage: python markov_crack.py markov_model_file password_input_file pwd_length output_file num_pwd_to_crack'
     os._exit(1)
 
 
